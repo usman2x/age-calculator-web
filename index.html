@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Age Calculator</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+  <div class="container mt-5">
+    <h1 class="text-center mb-4">Age Calculator</h1>
+    <div class="form-group">
+      <label for="birthdate">Enter Your Birthdate:</label>
+      <input type="date" class="form-control" id="birthdate">
+    </div>
+    <button type="button" class="btn btn-primary mb-4" onclick="calculateAge()">Calculate</button>
+    <div id="ageOutput" style="display: none;">
+      <p><strong>Age:</strong> <span id="years"></span> years, <span id="months"></span> months, <span id="weeks"></span> weeks, <span id="days"></span> days</p>
+      <div class="progress">
+        <div id="ageProgressBar" class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+      </div>
+    </div>
+    <p class="text-center mt-4"><strong>Hint:</strong> Average life expectancy in Pakistan is 65 years. <a href="https://www.dawn.com/news/amp/1721179" target="_blank">Learn more</a></p>
+  </div>
+
+  <script>
+    function calculateAge() {
+      var birthdate = new Date(document.getElementById('birthdate').value);
+      var currentDate = new Date();
+
+      var ageInMilliseconds = currentDate - birthdate;
+      var ageInSeconds = ageInMilliseconds / 1000;
+      var ageInMinutes = ageInSeconds / 60;
+      var ageInHours = ageInMinutes / 60;
+      var ageInDays = ageInHours / 24;
+      var ageInWeeks = ageInDays / 7;
+      var ageInMonths = ageInDays / 30.44;
+      var ageInYears = ageInDays / 365.25;
+
+      document.getElementById('years').textContent = Math.floor(ageInYears);
+      document.getElementById('months').textContent = Math.floor(ageInMonths);
+      document.getElementById('weeks').textContent = Math.floor(ageInWeeks);
+      document.getElementById('days').textContent = Math.floor(ageInDays);
+
+      var lifeExpectancy = 65; // Average life expectancy in Pakistan
+      var ageProgress = (ageInYears / lifeExpectancy) * 100;
+      var remainingAgeProgress = 100 - ageProgress;
+
+      document.getElementById('ageProgressBar').style.width = ageProgress.toFixed(2) + '%';
+      document.getElementById('ageProgressBar').setAttribute('aria-valuenow', ageProgress.toFixed(2));
+      document.getElementById('ageProgressBar').textContent = ageProgress.toFixed(2) + '%';
+
+      document.getElementById('ageOutput').style.display = 'block';
+    }
+  </script>
+</body>
+      </html>
